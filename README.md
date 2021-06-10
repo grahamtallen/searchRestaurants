@@ -1,5 +1,6 @@
 Assumptions
 
+- The string parameters will always be spelled correctly.
 - The restaraunts are evenly distributed amoung their attribute values. There is no need to optimize or make assumptions about the distributions of the data set, or optimize for any specific ranges.
 - The number of rows on each table is unbounded.
 - The response times need to scale linearly at the least.
