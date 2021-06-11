@@ -3,6 +3,9 @@ Assumptions
 - The string parameters will always be spelled correctly.
 - The restaraunts are evenly distributed amoung their attribute values. There is no need to optimize or make assumptions about the distributions of the data set, or optimize for any specific ranges.
 - The number of rows on each table is unbounded.
+- customer_rating has a max value of 5 and a minimum value of 1.
+- customer_rating is always an integer.
+- Distances are always integers in the data set but probably not representative of real life
 - The response times need to scale linearly at the least.
 - Each parameter can contain only one value.
 - Only return the 5 Best Matches.
@@ -38,6 +41,18 @@ Works in such a way that if other services fail, it reports correctly
 
 Maintainability
 
+
+Methods:
+
+Assess the problem space: what do we need to solve first?
+- Base case - The search function needs to handle each parameter accurately first,
+then implement the solution for "best matches"
+Ideally, each restarant is seeded into some data store that stores each one by its column value, implement column based storage that DW's use.
+Take each parameter and build a data store that can quickly get results for that type of query. 
+
+
+
+Optimizing range searches:
 
 Prioritiy Search trees gives you the data points at the upper and lower end of any range. They may not be optimized for searching text. Time will need to be spent building the trees, so the trees must be in place before queries are made. It might take time to search the tree, unless it can be held in memory, then the time spent searching it will be negligible, compared to searching a row-based database.
 
