@@ -1,0 +1,3 @@
+https://gist.githubusercontent.com/imliam/8c742621ee77dd8ba64bbebad1db4ebc/raw/baed363549020a13605a0788040e0a93ff650d0a/weighted-search.sql
+
+https://www.ctl.io/developers/blog/post/search-ranking

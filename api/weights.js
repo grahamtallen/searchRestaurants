@@ -39,13 +39,15 @@ const addWeightToRestaurant = (restaurant, params) => {
     } else {
         // distance weight-ing algo
         // assuming that a distance greater than 100 is negligible and not relevant
+        distWeight = (100 - distanceRestaurant) * 0.01
     }
 
 
 
     return {
         nameWeight,
-        ratingWeight
+        ratingWeight,
+        distWeight,
     }
 }
 
