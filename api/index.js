@@ -1,4 +1,4 @@
-const { addWeightToRestaurant } = require("./calculateWeights.js");
+const { calculateRestaurantWeight } = require("./calculateWeights.js");
 const fs = require("fs");
 // data-stores/restaurants-sorted-by-distance.json must be present in order for the file to run
 // see the init directory
@@ -36,7 +36,7 @@ const tryAQuery = () => {
             
         // }
         // TODO tune string parameters
-        const currentRestaurantWeights = addWeightToRestaurant(restauraunt, params);
+        const currentRestaurantWeights = calculateRestaurantWeight(restauraunt, params);
         const { nameWeight, ratingWeight, distWeight, matchWeight } = currentRestaurantWeights;
         console.log("Restaurant Weights: ", currentRestaurantWeights);
         console.log("Total: ", matchWeight);

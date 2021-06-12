@@ -4,7 +4,7 @@ const { getMatchWeight } = require("./compareWeights");
 // This function is designed to assign a weight to each restaurant
 // This weight will determine is priority order in the sort
 // Weight is a percentage, 0 <= weight <= 1  = true
-const addWeightToRestaurant = (restaurant, params) => {
+const calculateRestaurantWeight = (restaurant, params) => {
     const { name: nameRestaurant, customer_rating: customer_ratingRestaurant, distance: distanceRestaurant, price: priceRestaurant } = restaurant;
     const { name: nameParam, customer_rating: customer_ratingParam, distance: distanceParam, price: priceParam } = params;
 
@@ -61,5 +61,5 @@ const addWeightToRestaurant = (restaurant, params) => {
 }
 
 module.exports = {
-    addWeightToRestaurant
+    calculateRestaurantWeight
 }
