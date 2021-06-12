@@ -1,4 +1,5 @@
-const levenshtein = require("fast-levenshtein")
+const levenshtein = require("fast-levenshtein");
+const { getMatchWeight } = require("./compareWeights");
 
 // This function is designed to assign a weight to each restaurant
 // This weight will determine is priority order in the sort
@@ -9,10 +10,17 @@ const addWeightToRestaurant = (restaurant, params) => {
 
     let nameWeight;
     if (nameParam) {
-        const editDist = levenshtein.get(nameRestaurant, nameParam);
-        nameWeight = 1 - (editDist/50)
+        // string must include name parameter in some capacity
+        // otherwise weight is 0
+        if (!nameRestaurant.includes(nameParam)) {
+            nameWeight = 0;
+        } else {
+            const editDist = levenshtein.get(nameRestaurant, nameParam);
+            nameWeight = 1 - (editDist/50)
+        }
+
     } else {
-        // alphabetical?
+        nameWeight = 0;
     }
 
     // todo cuisine
@@ -42,12 +50,13 @@ const addWeightToRestaurant = (restaurant, params) => {
         distWeight = (100 - distanceRestaurant) * 0.01
     }
 
-
+    const matchWeight = getMatchWeight({nameWeight, distWeight, ratingWeight});
 
     return {
         nameWeight,
         ratingWeight,
         distWeight,
+        matchWeight,
     }
 }
 
