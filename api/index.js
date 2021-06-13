@@ -12,7 +12,7 @@ const tryAQuery = () => {
     const params = {
         // name: "Grill",
         // distance: 2,
-        rating: 4,
+        rating: 2,
     }
 
 
@@ -37,7 +37,7 @@ const tryAQuery = () => {
         // }
         // TODO tune string parameters
         const currentRestaurantWeights = calculateRestaurantWeight(restauraunt, params);
-        const { nameWeight, ratingWeight, distWeight, matchWeight } = currentRestaurantWeights;
+        const { matchWeight } = currentRestaurantWeights;
         console.log("Restaurant Weights: ", currentRestaurantWeights);
         console.log("Total: ", matchWeight);
         if (highestWeights.length === 0) {
@@ -47,12 +47,14 @@ const tryAQuery = () => {
             }
         } else {
             // compare to first (zeroth) element in highestWeights array
-            const firstElement = highestWeights[0];
-            const weightedHigherThanFirstElement = compareWeights(
-                matchWeight,
-                firstElement.matchWeight,
-                params,
-            )
+            // const firstElement = highestWeights[0];
+            // const weightedHigherThanFirstElement = compareWeights(
+            //     matchWeight,
+            //     firstElement.matchWeight,
+            //     params,
+            // )
+
+            // linear function
             const lastElement = highestWeights[highestWeights.length - 1];
             const weightedHigherThanLastElement = compareWeights(
                 matchWeight,
