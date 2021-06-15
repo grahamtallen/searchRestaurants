@@ -3,19 +3,19 @@ const { getMatchWeight } = require('./compareWeights')
 
 // This function is designed to assign a weight to each restaurant
 // This weight will determine is priority order in the sort
-// Weight is a percentage, 0 <= weight <= 1  = true
+// Weight is a percentage, btw 0 and 1
 const calculateRestaurantWeight = (restaurant, params) => {
     const {
         name: nameRestaurant,
         customer_rating: customer_ratingRestaurant,
         distance: distanceRestaurant,
-        price: priceRestaurant,
+        //        price: priceRestaurant,
     } = restaurant
     const {
         name: nameParam,
         customer_rating: customer_ratingParam,
         distance: distanceParam,
-        price: priceParam,
+        //        price: priceParam,
     } = params
 
     // look into PageRank for multi-param searching
@@ -32,6 +32,7 @@ const calculateRestaurantWeight = (restaurant, params) => {
             // https://www.npmjs.com/package/textrank
 
             const editDist = levenshtein.get(nameRestaurant, nameParam)
+            // TODO logarithm
             nameWeight = 1 - editDist / 50
         }
     } else {
