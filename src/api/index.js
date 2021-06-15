@@ -1,14 +1,24 @@
-const { calculateRestaurantWeight } = require('./calculateWeights.js')
+const {
+    calculateRestaurantWeight,
+} = require('./calculateWeights.js')
 const fs = require('fs')
 // data-stores/restaurants-sorted-by-distance.json must be present in order for the file to run
 // see the init directory
 const sortedByDistanceRaw = fs.readFileSync(
     'data-stores/restaurants-sorted-by-distance.json'
 )
-const sortedByDistance = JSON.parse(sortedByDistanceRaw)
-const { info, error } = console
+const sortedByDistance = JSON.parse(
+    sortedByDistanceRaw
+)
+const {
+    info,
+    error,
+} = console
 const assert = require('assert')
-const { getMatchWeight, compareWeights } = require('./compareWeights.js')
+const {
+    getMatchWeight,
+    compareWeights,
+} = require('./compareWeights.js')
 
 const tryAQuery = () => {
     const params = {
@@ -28,10 +38,26 @@ const tryAQuery = () => {
 
     // the given data array of restaurants should always be
 
-    for (let i = 0; i < sortedByDistance.length; i++) {
-        const restauraunt = sortedByDistance[i]
-        const { name, customer_rating, distance } = restauraunt
-        info('Restaurant: ', { name, customer_rating, distance })
+    for (
+        let i = 0;
+        i <
+        sortedByDistance.length;
+        i++
+    ) {
+        const restauraunt =
+            sortedByDistance[
+                i
+            ]
+        const {
+            name,
+            customer_rating,
+            distance,
+        } = restauraunt
+        info('Restaurant: ', {
+            name,
+            customer_rating,
+            distance,
+        })
 
         // if (name.includes("Grill")) {
 
@@ -41,10 +67,21 @@ const tryAQuery = () => {
             restauraunt,
             params
         )
-        const { matchWeight } = currentRestaurantWeights
-        console.log('Restaurant Weights: ', currentRestaurantWeights)
-        console.log('Total: ', matchWeight)
-        if (highestWeights.length === 0) {
+        const {
+            matchWeight,
+        } = currentRestaurantWeights
+        console.log(
+            'Restaurant Weights: ',
+            currentRestaurantWeights
+        )
+        console.log(
+            'Total: ',
+            matchWeight
+        )
+        if (
+            highestWeights.length ===
+            0
+        ) {
             // add restaurants with any weight to highestWeights when it is zero
             if (matchWeight) {
                 highestWeights.unshift(
@@ -56,7 +93,8 @@ const tryAQuery = () => {
             }
         } else {
             // compare to first (zeroth) element in highestWeights array
-            const firstElement = highestWeights[0]
+            const firstElement =
+                highestWeights[0]
             const weightedHigherThanFirstElement = compareWeights(
                 matchWeight,
                 firstElement.matchWeight,
@@ -64,18 +102,27 @@ const tryAQuery = () => {
             )
 
             // linear function
-            const lastElement = highestWeights[highestWeights.length - 1]
+            const lastElement =
+                highestWeights[
+                    highestWeights.length -
+                        1
+                ]
             const weightedHigherThanLastElement = compareWeights(
                 matchWeight,
                 lastElement.matchWeight,
                 params
             )
-            console.log({ firstElement, lastElement })
+            console.log({
+                firstElement,
+                lastElement,
+            })
             console.log({
                 weightedHigherThanFirstElement,
                 weightedHigherThanLastElement,
             })
-            if (weightedHigherThanFirstElement) {
+            if (
+                weightedHigherThanFirstElement
+            ) {
                 // unshift and add this restaurant to the first element in the array
                 highestWeights.unshift(
                     addRestaurauntWithWeights(
@@ -86,9 +133,12 @@ const tryAQuery = () => {
                 // the last element will be dropped
                 // check length here for error state?
                 // delete highestWeights[LIMIT + 1]
-            } else if (weightedHigherThanLastElement) {
+            } else if (
+                weightedHigherThanLastElement
+            ) {
                 highestWeights[
-                    highestWeights.length - 1
+                    highestWeights.length -
+                        1
                 ] = addRestaurauntWithWeights(
                     restauraunt,
                     currentRestaurantWeights
@@ -112,7 +162,10 @@ const tryAQuery = () => {
     return highestWeights
 }
 
-const addRestaurauntWithWeights = (restauraunt, weights) => {
+const addRestaurauntWithWeights = (
+    restauraunt,
+    weights
+) => {
     return {
         ...restauraunt,
         ...weights,
