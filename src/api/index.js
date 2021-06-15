@@ -1,20 +1,21 @@
 const { calculateRestaurantWeight } = require('./calculateWeights.js')
 const fs = require('fs')
+const path = require('path')
 // data-stores/restaurants-sorted-by-distance.json must be present in order for the file to run
 // see the init directory
 const sortedByDistanceRaw = fs.readFileSync(
-    'data-stores/restaurants-sorted-by-distance.json'
+    path.resolve('src/data-stores/restaurants-sorted-by-distance.json')
 )
 const sortedByDistance = JSON.parse(sortedByDistanceRaw)
 const { info, error } = console
 const assert = require('assert')
 const { getMatchWeight, compareWeights } = require('./compareWeights.js')
 
-const tryAQuery = () => {
+const tryAQuery = (name, distance = 100, rating = 1) => {
     const params = {
-        // name: "Grill",
-        // distance: 2,
-        rating: 2,
+        name,
+        distance,
+        rating,
     }
 
     const LIMIT = 5
@@ -60,13 +61,6 @@ const tryAQuery = () => {
             }
         } else {
             // compare to first (zeroth) element in highestWeights array
-            const firstElement = highestWeights[0]
-            const weightedHigherThanFirstElement = compareWeights(
-                matchWeight,
-                firstElement.matchWeight,
-                params
-            )
-
             // linear function
             const lastElement = highestWeights[highestWeights.length - 1]
             const weightedHigherThanLastElement = compareWeights(
@@ -75,31 +69,12 @@ const tryAQuery = () => {
                 params
             )
             console.log({
-                firstElement,
                 lastElement,
             })
             console.log({
-                weightedHigherThanFirstElement,
                 weightedHigherThanLastElement,
             })
-            if (weightedHigherThanFirstElement) {
-                // unshift and add this restaurant to the first element in the array
-                highestWeights.unshift(
-                    addRestaurauntWithWeights(
-                        restauraunt,
-                        currentRestaurantWeights
-                    )
-                )
-                // the last element will be dropped
-                // check length here for error state?
-                // delete highestWeights[LIMIT + 1]
-            } else if (weightedHigherThanLastElement) {
-                highestWeights[
-                    highestWeights.length - 1
-                ] = addRestaurauntWithWeights(
-                    restauraunt,
-                    currentRestaurantWeights
-                )
+            if (weightedHigherThanLastElement) {
                 // info({weightedHigherThanFirstElement})
                 // if the current item is weighted higher than the last item in the list,
                 // continue iterating until one is found that has a higher rating than the current element
@@ -112,6 +87,60 @@ const tryAQuery = () => {
 
                 // push this element to the last element,
                 // dropping the first element
+                const getElementIndexRatedHigherThanCurrentRestaraunt = (
+                    searchRestaraunt,
+                    indextoCompare,
+                    weightedSortedRestaraunts = []
+                ) => {
+                    console.log(
+                        searchRestaraunt.name,
+                        indextoCompare,
+                        weightedSortedRestaraunts
+                    )
+                    // Using in-memory variable highestWeights
+                    const restarauntAtComparisonIndex =
+                        weightedSortedRestaraunts[indextoCompare]
+                    const weightComparisonResult = compareWeights(
+                        searchRestaraunt.matchWeight,
+                        restarauntAtComparisonIndex.matchWeight
+                    )
+                    const isZerothElement = indextoCompare === 0
+
+                    if (weightComparisonResult) {
+                        if (isZerothElement) {
+                            // current searchRestaraunt
+                            return 'This restaraunt is highest weighted'
+                        } else {
+                            return getElementIndexRatedHigherThanCurrentRestaraunt(
+                                searchRestaraunt,
+                                currentIndex - 1, // iterate upwards until zero element is compared or higher restaurant found
+                                weightedSortedRestaraunts
+                            )
+                        }
+                    } else {
+                        return indextoCompare
+                    }
+                }
+
+                const indexThatCurrentRestarantShouldReplace =
+                    getElementIndexRatedHigherThanCurrentRestaraunt(
+                        restauraunt,
+                        highestWeights.length - 1, // get last index of array
+                        highestWeights
+                    )
+
+                if (
+                    indexThatCurrentRestarantShouldReplace ===
+                    'This restaraunt is highest weighted'
+                ) {
+                    highestWeights.unshift(
+                        addRestaurauntWithWeights(
+                            restauraunt,
+                            currentRestaurantWeights
+                        )
+                    )
+                }
+                console.log(indexThatCurrentRestarantShouldReplace)
             }
         }
     }
@@ -127,3 +156,7 @@ const addRestaurauntWithWeights = (restauraunt, weights) => {
 }
 
 info(tryAQuery())
+
+module.exports = {
+    tryAQuery,
+}
