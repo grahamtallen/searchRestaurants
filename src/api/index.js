@@ -10,8 +10,28 @@ const sortedByDistance = JSON.parse(sortedByDistanceRaw)
 const { info, error } = console
 const assert = require('assert')
 const { getMatchWeight, compareWeights } = require('./compareWeights.js')
+const rating = require('./rating.js')
 
-const tryAQuery = (name, distance = 100, rating = 1) => {
+const main = (name, distance = 100, rating = null) => {
+    const dataset = []
+    // Based on the query options, choose the right filtered dataset
+    // Rating is the easiest to start
+
+    if (rating) {
+        // get filtered rating set based on rating
+        dataset = rating.main(rating)
+    }
+    console.log(dataset.length, rating)
+}
+
+const testMainApiFunctions = () => {
+    // gets the smallest dataset possible for each parameter
+    const resultOfFilteringByRating = main(null, null, 3)
+}
+
+testMainApiFunctions()
+
+const tryAQuery = (name, distance = 100, rating = 1, dataset) => {
     const params = {
         name,
         distance,
@@ -29,8 +49,8 @@ const tryAQuery = (name, distance = 100, rating = 1) => {
 
     // the given data array of restaurants should always be
 
-    for (let i = 0; i < sortedByDistance.length; i++) {
-        const restauraunt = sortedByDistance[i]
+    for (let i = 0; i < dataset.length; i++) {
+        const restauraunt = dataset[i]
         const { name, customer_rating, distance } = restauraunt
         info('Restaurant: ', {
             name,
@@ -53,10 +73,7 @@ const tryAQuery = (name, distance = 100, rating = 1) => {
             // add restaurants with any weight to highestWeights when it is zero
             if (matchWeight) {
                 highestWeights.unshift(
-                    addRestaurauntWithWeights(
-                        restauraunt,
-                        currentRestaurantWeights
-                    )
+                    mergeObjects(restauraunt, currentRestaurantWeights)
                 )
             }
         } else {
@@ -134,13 +151,10 @@ const tryAQuery = (name, distance = 100, rating = 1) => {
                     'This restaraunt is highest weighted'
                 ) {
                     highestWeights.unshift(
-                        addRestaurauntWithWeights(
-                            restauraunt,
-                            currentRestaurantWeights
-                        )
+                        mergeObjects(restauraunt, currentRestaurantWeights)
                     )
                 }
-                console.log(indexThatCurrentRestarantShouldReplace)
+                //console.log(indexThatCurrentRestarantShouldReplace)
             }
         }
     }
@@ -148,14 +162,12 @@ const tryAQuery = (name, distance = 100, rating = 1) => {
     return highestWeights
 }
 
-const addRestaurauntWithWeights = (restauraunt, weights) => {
+const mergeObjects = (restauraunt, weights) => {
     return {
         ...restauraunt,
         ...weights,
     }
 }
-
-info(tryAQuery())
 
 module.exports = {
     tryAQuery,

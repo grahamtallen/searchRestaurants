@@ -1,15 +1,14 @@
 Assumptions
 
-*   The string parameters will always be spelled correctly.
-*   The restaraunts are evenly distributed amoung their attribute values. There is no need to optimize or make assumptions about the distributions of the data set, or optimize for any specific ranges.
-*   The number of rows on each table is unbounded.
-*   customer_rating has a max value of 5 and a minimum value of 1.
-*   customer_rating is always an integer.
-*   Distances are always integers in the data set but probably not representative of real life
-*   The response times need to scale linearly at the least.
-*   Each parameter can contain only one value.
-*   Only return the 5 Best Matches.
-*   Code is clean, readable, testable, robust, performant, and maintainable.
+-   The string parameters will always be spelled correctly.
+-   The restaraunts are evenly distributed amoung their attribute values. There is no need to optimize or make assumptions about the distributions of the data set, or optimize for any specific ranges.
+-   The number of rows on each table is unbounded.
+-   customer_rating has a max value of 5 and a minimum value of 1.
+-   customer_rating is always an integer.
+-   f(n) should be greater than or equal to O(n)
+-   Each parameter can contain only one value.
+-   Only return the 5 Best Matches.
+-   Code is clean, readable, testable, robust, performant, and maintainable.
 
 Best Matches
 
@@ -45,7 +44,7 @@ Methods:
 
 Assess the problem space: what do we need to solve first?
 
-*   Base case - The search function needs to handle each parameter accurately first,
+-   Base case - The search function needs to handle each parameter accurately first,
     then implement the solution for "best matches"
     Ideally, each restarant is seeded into some data store that stores each one by its column value, implement column based storage that DW's use.
     Take each parameter and build a data store that can quickly get results for that type of query.

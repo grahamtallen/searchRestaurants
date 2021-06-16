@@ -1,20 +1,20 @@
-var readline = require('readline'),
-    rl = readline.createInterface(process.stdin, process.stdout)
+const { tryAQuery } = require('../api/index.js')
+const readline = require('readline')
+const rl = readline.createInterface(process.stdin, process.stdout)
+const byname = require('../data-stores/byName-keyed-object.json')
 
-rl.setPrompt('OHAI> ')
+rl.setPrompt(
+    'Type a name of a restaurant, cusine or number rating to get results> '
+)
 rl.prompt()
 
 rl.on('line', function (line) {
-    switch (line.trim()) {
-        case 'hello':
-            console.log('world!')
-            break
-        default:
-            console.log('Say what? I might have heard `' + line.trim() + '`')
-            break
+    const input = line.trim()
+    if (input) {
+        console.log(tryAQuery(input))
     }
     rl.prompt()
 }).on('close', function () {
-    console.log('Have a great day!')
+    console.log('Closing program...')
     process.exit(0)
 })
