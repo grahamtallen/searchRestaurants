@@ -1,13 +1,22 @@
 const csvtojson = require('csvtojson/v2')
-const fs = require('fs')
+const fs = require('fs');
+const keyBy = require('lodash/keyBy');
 const RESTAURANTS_ALL_PATH = 'csv/restaurants.csv'
+const CUISINES_ALL_PATH = 'csv/cuisines.csv'
 const DATA_STORES_PATH = 'src/data-stores/'
 
 const main = async () => {
-    // todo join cusine
-    const restaurantsAll = await csvtojson().fromFile(RESTAURANTS_ALL_PATH)
+    let restaurantsAll = await csvtojson().fromFile(RESTAURANTS_ALL_PATH)
+    const cuisinesAll = await csvtojson().fromFile(CUISINES_ALL_PATH);
+    // join cusine
+    const cuisinesKeyedById = keyBy(cuisinesAll, cuisine => cuisine.id);
+    restaurantsAll = restaurantsAll.map(restaurant => {
+        console.log(restaurant.cuisine_id);
+        restaurant.cuisine = cuisinesKeyedById[restaurant.cuisine_id].name
+        return restaurant
+    })
+    console.log(restaurantsAll)
 
-    saveToDataStore(restaurantsAll, 'restaurants-all.json')
     saveToDataStore(
         restaurantsAll.sort((a, b) => a.distance - b.distance),
         'restaurants-sorted-by-distance.json'
@@ -28,7 +37,7 @@ const main = async () => {
     const ThreeStarRestaurants = []
     const TwoStarRestaurants = []
     const OneStarRestaurants = []
-    // TODO storing by key in an object with some identifier, faster lookup than iterating through an array
+    // TODO bucket all items in a single list based on range
     restaurantsAll.forEach(restaurant => {
         const { customer_rating } = restaurant
         switch (customer_rating) {
@@ -78,7 +87,6 @@ const main = async () => {
         return distA - distB
     })
     // const distancesBucketed
-    console.log(distances)
 }
 
 // main()
@@ -91,3 +99,5 @@ const saveToDataStore = (data, filename) => {
 module.exports = {
     DATA_STORES_PATH
 }
+
+main();
