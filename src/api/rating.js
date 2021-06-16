@@ -38,7 +38,6 @@ const bucketedByRatingRaw = fs.readFileSync(
 )
 const bucketedByRating = JSON.parse(bucketedByRatingRaw)
 const {FiveStarRestaurants, FourStarRestaurants, ThreeStarRestaurants, TwoStarRestaurants, OneStarRestaurants} = bucketedByRating
-console.log({FiveStarRestaurants: FiveStarRestaurants.length, FourStarRestaurants: FourStarRestaurants.length, ThreeStarRestaurants: ThreeStarRestaurants.length, TwoStarRestaurants: TwoStarRestaurants.length, OneStarRestaurants: OneStarRestaurants.length});
 
 //
 // todo assert these results with tests

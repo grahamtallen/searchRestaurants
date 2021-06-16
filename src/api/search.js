@@ -3,12 +3,12 @@ const { info, error } = console
 const assert = require('assert')
 const { getMatchWeight, compareWeights } = require('./compareWeights.js')
 
-const main = (name, distance = 100, rating = 1, dataset) => {
-    const params = {
+const main = (params, onResult) => {
+    const {
         name,
         distance,
         rating,
-    }
+    } = params
 
     const LIMIT = 5
     // This  array will always hold <= LIMIT elements
@@ -39,8 +39,8 @@ const main = (name, distance = 100, rating = 1, dataset) => {
             params
         )
         const { matchWeight } = currentRestaurantWeights
-        console.log('Restaurant Weights: ', currentRestaurantWeights)
-        console.log('Total: ', matchWeight)
+        // console.log('Restaurant Weights: ', currentRestaurantWeights)
+        // console.log('Total: ', matchWeight)
         if (highestWeights.length === 0) {
             // add restaurants with any weight to highestWeights when it is zero
             if (matchWeight) {
@@ -57,12 +57,7 @@ const main = (name, distance = 100, rating = 1, dataset) => {
                 lastElement.matchWeight,
                 params
             )
-            console.log({
-                lastElement,
-            })
-            console.log({
-                weightedHigherThanLastElement,
-            })
+        
             if (weightedHigherThanLastElement) {
                 // info({weightedHigherThanFirstElement})
                 // if the current item is weighted higher than the last item in the list,
@@ -81,11 +76,7 @@ const main = (name, distance = 100, rating = 1, dataset) => {
                     indextoCompare,
                     weightedSortedRestaraunts = []
                 ) => {
-                    console.log(
-                        searchRestaraunt.name,
-                        indextoCompare,
-                        weightedSortedRestaraunts
-                    )
+                    
                     // Using in-memory variable highestWeights
                     const restarauntAtComparisonIndex =
                         weightedSortedRestaraunts[indextoCompare]

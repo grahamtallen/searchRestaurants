@@ -11,11 +11,9 @@ const main = async () => {
     // join cusine
     const cuisinesKeyedById = keyBy(cuisinesAll, cuisine => cuisine.id);
     restaurantsAll = restaurantsAll.map(restaurant => {
-        console.log(restaurant.cuisine_id);
         restaurant.cuisine = cuisinesKeyedById[restaurant.cuisine_id].name
         return restaurant
     })
-    console.log(restaurantsAll)
 
     saveToDataStore(
         restaurantsAll.sort((a, b) => a.distance - b.distance),
@@ -72,10 +70,6 @@ const main = async () => {
 
     saveToDataStore(completeBucketedRestaurants, 'bucketed-by-rating.json')
 
-    // console.log({
-    // 	FiveStarRestaurants: FiveStarRestaurants.length,
-    // 	OneStarRestaurants: OneStarRestaurants.length
-    // });
 
     // Distance: keep it simple and build a set with the distance as the key
 
