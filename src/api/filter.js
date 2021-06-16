@@ -1,24 +1,35 @@
 const assert = require('assert')
 const { main: getDataSetBasedOnRating } = require('./rating.js');
-const { main: getDataSetBasedOnDistance } = require('./distance.js');
+const { main: getDataSetBasedOnDistance, hasDataAtThatDistance } = require('./distance.js');
+const { main: getDataSetBasedOnPrice } = require('./price.js');
+const fs = require('fs');
+const path = require('path');
+const sortedByDistanceRaw = fs.readFileSync(
+    path.resolve('src/data-stores/restaurants-sorted-by-distance.json')
+)
+const sortedByDistance = JSON.parse(sortedByDistanceRaw);
 
-const main = (name, distance = 100, rating = null) => {
-    let dataset = []
+
+const main = (parameters = {}) => {
+    const { distance = 100, customer_rating = null, price } = parameters
+    let dataset = sortedByDistance;
     // Based on the query options, choose the right filtered dataset
     // these don't work simultaneously
     // Rating is the easiest to start
 
-    if (rating) {
+    if (customer_rating) {
         // get filtered rating set based on rating
-        dataset = getDataSetBasedOnRating(rating)
+        dataset = getDataSetBasedOnRating(customer_rating)
         
     }
-    if (distance) {
+    if (distance && hasDataAtThatDistance(distance)) {
         dataset = getDataSetBasedOnDistance(distance)
     }
-    if (name) {
-        // filter dataset based on name
+
+    if (price) {
+        dataset = getDataSetBasedOnPrice(price)
     }
+    
     return dataset
 }
 
@@ -28,32 +39,36 @@ const testMainApiFunctions = () => {
 
     // Distance
     // Filtering out all of the items that are less than the provided distance parameter
-    const resultOfFilteringByDistance = main(null, 3, null);
+    const resultOfFilteringByDistance = main({distance: 3});
     // combination of the size of the 1 distance bucket, the 2 and the 3, so
     // 20 + 20 + 28
+    // console.debug("These should only include 3's, 2's and 1'ss ", resultOfFilteringByDistance.map(res => res.distance))
     assert.strictEqual(resultOfFilteringByDistance.length, 68, 'Result of filtering by distance is items 68')
 
     /*
-    Ratings
-    {
-        FiveStarRestaurants: 38,
-        FourStarRestaurants: 31,
-        ThreeStarRestaurants: 44,
-        TwoStarRestaurants: 47,
-        OneStarRestaurants: 40
-    }
+        Ratings
+
     */
-    const resultOfFilteringByRating = main(null, null, 3);
-    // should include Five, Four, Three star restaraunts, so
-    // 44 + 31 + 38
-    assert.strictEqual(resultOfFilteringByRating.length, 113);
+    const resultOfFilteringByRating = main({customer_rating: 3});
 
-    const resultOfFilteringByHighRating = main(null, null, 5);
-    assert.strictEqual(resultOfFilteringByHighRating.length, 38);
+    assert.strictEqual(resultOfFilteringByRating.length, 156);
 
-    const resultOfFilteringByLowRating = main(null, null, 1);
+    const resultOfFilteringByHighRating = main({customer_rating: 5});
+    assert.strictEqual(resultOfFilteringByHighRating.length, 76);
+
+    const resultOfFilteringByLowRating = main({customer_rating: 1});
     // 44 + 31 + 38 + 44 + 47 + 40
-    assert.strictEqual(resultOfFilteringByLowRating.length, 200);
+    assert.strictEqual(resultOfFilteringByLowRating.length, 236);
+
+    /*
+        Testing accuracy of price
+    */
+
+    const resultOfFilteringByPrice = main({price: 35});
+    assert.strictEqual(resultOfFilteringByPrice.length, 127)
+    assert.strictEqual(resultOfFilteringByPrice.filter(item => {
+        parseInt(item.price) > 35
+    }).length, 0, 'Price filter excludes all over 35 priced items')
 
 }
 

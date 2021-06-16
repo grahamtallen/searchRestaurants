@@ -9,7 +9,7 @@ Assumptions
 -   Each parameter can contain only one value.
 -   Only return the 5 Best Matches.
 -   Code is clean, readable, testable, robust, performant, and maintainable.
-
+-   Price can be bucketed to intervals of 5
 Best Matches
 
 “Best match” is defined as below:

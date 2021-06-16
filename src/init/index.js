@@ -29,61 +29,9 @@ const main = async () => {
     })
     saveToDataStore(byName, 'byName-keyed-object.json')
 
-    // Customer rating: bucket every restaruant by customer rating
-    const FiveStarRestaurants = []
-    const FourStarRestaurants = []
-    const ThreeStarRestaurants = []
-    const TwoStarRestaurants = []
-    const OneStarRestaurants = []
-    // TODO bucket all items in a single list based on range
-    restaurantsAll.forEach(restaurant => {
-        const { customer_rating } = restaurant
-        switch (customer_rating) {
-            case '5':
-                FiveStarRestaurants.push(restaurant)
-                break
-            case '4':
-                FourStarRestaurants.push(restaurant)
-                break
-            case '3':
-                ThreeStarRestaurants.push(restaurant)
-                break
-            case '2':
-                TwoStarRestaurants.push(restaurant)
-                break
-            case '1':
-                OneStarRestaurants.push(restaurant)
-                break
-            default:
-                throw new Error(
-                    'Unhandled restaurant rating: ' + customer_rating
-                )
-        }
-    })
-    const completeBucketedRestaurants = {
-        FiveStarRestaurants,
-        FourStarRestaurants,
-        ThreeStarRestaurants,
-        TwoStarRestaurants,
-        OneStarRestaurants,
-    }
 
-    saveToDataStore(completeBucketedRestaurants, 'bucketed-by-rating.json')
-
-
-    // Distance: keep it simple and build a set with the distance as the key
-
-    // add all restaurants distances to a distances array
-    distances = restaurantsAll.sort((a, b) => {
-        const distA = parseFloat(a.distance)
-        const distB = parseFloat(b.distance)
-        // sort the shorter distances first
-        return distA - distB
-    })
-    // const distancesBucketed
 }
 
-// main()
 
 const saveToDataStore = (data, filename) => {
     let json = JSON.stringify(data)

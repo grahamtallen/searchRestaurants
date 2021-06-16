@@ -1,16 +1,15 @@
-const sortedByDistance = JSON.parse(sortedByDistanceRaw)
 const { info, error } = console
-const assert = require('assert')
-const { getMatchWeight, compareWeights } = require('./compareWeights.js')
-
-const main = (params, onResult) => {
+const {  compareWeights } = require('./compareWeights.js')
+const { calculateRestaurantWeight } = require('./calculateWeights')
+const main = (params, dataset = 0, matchFound) => {
     const {
         name,
         distance,
         rating,
     } = params
-
-    const LIMIT = 5
+    if (dataset.length === 0) {
+        throw new Error('Dataset provided to search function is empty')
+    }
     // This  array will always hold <= LIMIT elements
     // The zeroth element will hold the highest weighted restaurant
     // The index-4 element will hold the LIMITth highest weighted restaurant
@@ -23,23 +22,20 @@ const main = (params, onResult) => {
 
     for (let i = 0; i < dataset.length; i++) {
         const restauraunt = dataset[i]
-        const { name, customer_rating, distance } = restauraunt
+        const { name, customer_rating, distance, cuisine, price } = restauraunt
         info('Restaurant: ', {
             name,
             customer_rating,
             distance,
+            cuisine,
+            price,
         })
-
-        // if (name.includes("Grill")) {
-
-        // }
-        // TODO tune string parameters
         const currentRestaurantWeights = calculateRestaurantWeight(
             restauraunt,
             params
         )
         const { matchWeight } = currentRestaurantWeights
-        // console.log('Restaurant Weights: ', currentRestaurantWeights)
+        console.log('Restaurant Weights: ', currentRestaurantWeights)
         // console.log('Total: ', matchWeight)
         if (highestWeights.length === 0) {
             // add restaurants with any weight to highestWeights when it is zero

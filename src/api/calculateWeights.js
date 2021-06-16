@@ -7,38 +7,22 @@ const { getMatchWeight } = require('./compareWeights')
 const calculateRestaurantWeight = (restaurant, params) => {
     const {
         name: nameRestaurant,
+        cuisine: cuisineRestaurant,
         customer_rating: customer_ratingRestaurant,
         distance: distanceRestaurant,
-        //        price: priceRestaurant,
+               price: priceRestaurant,
     } = restaurant
     const {
         name: nameParam,
+        cuisine: cuisineParam,
         customer_rating: customer_ratingParam,
         distance: distanceParam,
-        //        price: priceParam,
+               price: priceParam,
     } = params
 
-    // look into PageRank for multi-param searching
-    let nameWeight
-    if (nameParam) {
-        // string must include name parameter in some capacity
-        // otherwise weight is 0
-        if (!nameRestaurant.includes(nameParam)) {
-            nameWeight = 0
-        } else {
-            // TODO look into cosign similarity matching
-            // TODO Bag of words/keywords
-            // TODO look https://github.com/ccsv/Presentations/blob/gh-pages/NLP/TextRank.pdf
-            // https://www.npmjs.com/package/textrank
-
-            const editDist = levenshtein.get(nameRestaurant, nameParam)
-            // TODO logarithm
-            nameWeight = 1 - editDist / 50
-        }
-    } else {
-        nameWeight = 0
-    }
-
+    const nameWeight = calculateStringWeight(nameRestaurant, nameParam);
+    const cuisineWeight = calculateStringWeight(cuisineRestaurant, cuisineParam);
+    
     // todo cuisine
 
     // rating
@@ -65,20 +49,59 @@ const calculateRestaurantWeight = (restaurant, params) => {
         // assuming that a distance greater than 100 is negligible and not relevant
         distWeight = (100 - distanceRestaurant) * 0.01
     }
+
+    // price
+    let priceWeight
+    if (priceRestaurant === 0) {
+        priceWeight = 1 // you're right there on it bud
+    } else if (priceParam && priceRestaurant > priceParam) {
+        priceWeight = 0
+    } else {
+        priceWeight = (100 - priceRestaurant) * 0.01
+    }
+
+
     // TODO look into logarithm for distance
 
-    const matchWeight = getMatchWeight({
+    const allWeights = {
         nameWeight,
-        distWeight,
         ratingWeight,
-    })
+        distWeight,
+        cuisineWeight,
+        priceWeight,
+    }
+
+    const matchWeight = getMatchWeight(allWeights, params)
 
     return {
-        nameWeight,
-        ratingWeight,
-        distWeight,
+        ...allWeights,
         matchWeight,
     }
+}
+
+const calculateStringWeight = (value, search) => {
+    // look into PageRank for multi-param searching
+    let weight
+    if (search) {
+        // string must include name parameter in some capacity
+        // otherwise weight is 0
+        if (!value.includes(search)) {
+            weight = 0
+        } else {
+            // TODO look into cosign similarity matching
+            // TODO Bag of words/keywords
+            // TODO look https://github.com/ccsv/Presentations/blob/gh-pages/NLP/TextRank.pdf
+            // https://www.npmjs.com/package/textrank
+
+            const editDist = levenshtein.get(value, search)
+            // TODO logarithm
+            console.log({editDist}, 1 - editDist / 50)
+            weight = 1 - editDist / 50
+        }
+    } else {
+        weight = 0
+    }
+    return weight
 }
 
 module.exports = {
