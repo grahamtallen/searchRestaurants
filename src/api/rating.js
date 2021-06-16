@@ -1,4 +1,5 @@
 const fs = require('fs')
+const path = require('path')
 
 const main = (targetRatingParameter) => {
     /*
@@ -8,7 +9,7 @@ const main = (targetRatingParameter) => {
     const {
         FiveStarRestaurants,
         FourStarRestaurants,
-        ThreeStartRestaurants,
+        ThreeStarRestaurants,
         TwoStarRestaurants,
         OneStarRestaurants,
     } = bucketedByRating
@@ -19,21 +20,26 @@ const main = (targetRatingParameter) => {
             return FiveStarRestaurants.concat(FourStarRestaurants)
         case 3:
             return FiveStarRestaurants.concat(FourStarRestaurants).concat(
-                ThreeStartRestaurants
+                ThreeStarRestaurants
             )
-        // etc
+        case 2: 
+            return FiveStarRestaurants.concat(FourStarRestaurants).concat(
+                ThreeStarRestaurants).concat(TwoStarRestaurants)
+        case 1: 
+            return FiveStarRestaurants.concat(FourStarRestaurants).concat(
+                ThreeStarRestaurants).concat(TwoStarRestaurants).concat(OneStarRestaurants)
+        default:
+            throw new Error("Invalid rating provided")
     }
 }
 
 const bucketedByRatingRaw = fs.readFileSync(
-    'data-stores/bucketed-by-rating.json'
+    path.resolve('src/data-stores/bucketed-by-rating.json')
 )
 const bucketedByRating = JSON.parse(bucketedByRatingRaw)
-console.log({
-    bucketedByRating,
-})
+const {FiveStarRestaurants, FourStarRestaurants, ThreeStarRestaurants, TwoStarRestaurants, OneStarRestaurants} = bucketedByRating
+console.log({FiveStarRestaurants: FiveStarRestaurants.length, FourStarRestaurants: FourStarRestaurants.length, ThreeStarRestaurants: ThreeStarRestaurants.length, TwoStarRestaurants: TwoStarRestaurants.length, OneStarRestaurants: OneStarRestaurants.length});
 
-console.log('Searching for one start restaurants and lower: ', main(1))
 //
 // todo assert these results with tests
 //

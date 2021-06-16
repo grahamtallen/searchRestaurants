@@ -1,7 +1,7 @@
 const csvtojson = require('csvtojson/v2')
 const fs = require('fs')
 const RESTAURANTS_ALL_PATH = 'csv/restaurants.csv'
-const DATA_STORES_PATH = 'data-stores/'
+const DATA_STORES_PATH = 'src/data-stores/'
 
 const main = async () => {
     // todo join cusine
@@ -81,9 +81,13 @@ const main = async () => {
     console.log(distances)
 }
 
-main()
+// main()
 
 const saveToDataStore = (data, filename) => {
     let json = JSON.stringify(data)
     fs.writeFileSync(DATA_STORES_PATH + filename, json)
+}
+
+module.exports = {
+    DATA_STORES_PATH
 }
