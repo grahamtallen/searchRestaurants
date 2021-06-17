@@ -1,6 +1,9 @@
 # searchRestaurants
 
-A small node program that performs queries on a restaurants 2. database
+A small node program that performs queries on a restaurants database.
+
+## Methodology
+
 The focus of this project was to optimize the performance of querying against this dataset. One important optimization - Before the queries are run, there are buckets that are generated so that queries do not have to perform the bucketing at the runtime. See `src/init/index.js`
 The best function to start analyzing this my code is `performQueryAndGetResultSet`.
 It will get the data set of items filtered by the current search parameters
