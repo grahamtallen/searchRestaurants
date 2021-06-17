@@ -14,7 +14,7 @@ const main = () => {
                 cuisine: 'Other',
             },
             LIMIT
-        ).
+        )
     )
     console.log(
         performQueryAndGetResultSet(
