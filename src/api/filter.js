@@ -1,7 +1,7 @@
 const assert = require('assert')
-const { main: getDataSetBasedOnRating } = require('./rating.js');
+const { main: getDataSetBasedOnRating, hasDataAtThatRating } = require('./rating.js');
 const { main: getDataSetBasedOnDistance, hasDataAtThatDistance } = require('./distance.js');
-const { main: getDataSetBasedOnPrice } = require('./price.js');
+const { main: getDataSetBasedOnPrice, hasDataAtThatPrice } = require('./price.js');
 const fs = require('fs');
 const path = require('path');
 const sortedByDistanceRaw = fs.readFileSync(
@@ -12,12 +12,12 @@ const sortedByDistance = JSON.parse(sortedByDistanceRaw);
 
 const main = (parameters = {}) => {
     const { distance = 100, customer_rating = null, price } = parameters
-    let dataset = sortedByDistance;
+    let dataset = sortedByDistance.slice(10, 20);
     // Based on the query options, choose the right filtered dataset
     // these don't work simultaneously
     // Rating is the easiest to start
 
-    if (customer_rating) {
+    if (customer_rating && hasDataAtThatRating(customer_rating)) {
         // get filtered rating set based on rating
         dataset = getDataSetBasedOnRating(customer_rating)
         
@@ -26,7 +26,7 @@ const main = (parameters = {}) => {
         dataset = getDataSetBasedOnDistance(distance)
     }
 
-    if (price) {
+    if (price && hasDataAtThatPrice(price)) {
         dataset = getDataSetBasedOnPrice(price)
     }
     

@@ -9,6 +9,10 @@ const main = (price) => {
     return bucketedByPrice[price].data;
 };
 
+const hasDataAtThatPrice = (price) => !!bucketedByPrice[price]
+
+
 module.exports = {
-    main
+    main,
+    hasDataAtThatPrice
 }

@@ -10,11 +10,14 @@ const getMatchWeight = ({ nameWeight, distWeight, ratingWeight, cuisineWeight },
     // The total weight based on the parameters. 0 is used to filter out results
     if (name && nameWeight === 0) {
         return 0
-    } else if (cuisine && cuisineWeight === 0) {
+    } 
+    if (cuisine && cuisineWeight === 0) {
         return 0
-    } else if (customer_rating && !ratingWeight) {
+    } 
+    if (customer_rating && !ratingWeight) {
         return 0
-    } else if (distance && !distanceWeight) {
+    } 
+    if (distance && !distanceWeight) {
         return 0
     }
     return nameWeight * 2 + distWeight * 3 + ratingWeight * 2 // todo price weight

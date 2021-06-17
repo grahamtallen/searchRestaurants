@@ -11,9 +11,15 @@ const main = (targetRatingParameter) => {
     A Customer Rating match is defined as a Customer Rating equal to or more than what users have asked for. 
     For example, “3” would match all the 3 stars restaurants plus all the 4 stars and 5 stars restaurants.
     */
+
+
     return bucketedByRating[targetRatingParameter].data;
 }
 
+const hasDataAtThatRating = (rating) => !!bucketedByRating[rating]
+
+
 module.exports = {
     main,
+    hasDataAtThatRating,
 }

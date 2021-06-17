@@ -95,7 +95,6 @@ const calculateStringWeight = (value, search) => {
 
             const editDist = levenshtein.get(value, search)
             // TODO logarithm
-            console.log({editDist}, 1 - editDist / 50)
             weight = 1 - editDist / 50
         }
     } else {
