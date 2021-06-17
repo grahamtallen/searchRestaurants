@@ -1,12 +1,17 @@
 Prerequisites
+
 - Install node.js (preferrably with nvm)
 - If you did not use nvm to install node, you must also install npm - node package manger
 
+Installing libraries
+
+- `npm -i`
+
 Running the program
 - Initialize the json bucket files used for optimized querying:
-- run the command "node src/init/index.js"
+- run the command `mkdir src/data-stores && node src/init/index.js`
 - This will create a number of bucketed data results in src/data-stores
-- run the command "node src/index.js"
+- run the command `node src/index.js`
 - The results of the two queries in that file are logged to the console
 - You can try getting different result sets by modifying those parameters
 
