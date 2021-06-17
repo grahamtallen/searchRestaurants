@@ -1,0 +1,24 @@
+{
+  "name": "searchrestaraunts",
+  "version": "1.0.0",
+  "description": "A small node program that performs queries on a restaurants database.",
+  "main": "prettier.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grahamtallen/searchRestaurants.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grahamtallen/searchRestaurants/issues"
+  },
+  "homepage": "https://github.com/grahamtallen/searchRestaurants#readme",
+  "dependencies": {
+    "csvtojson": "^2.0.10",
+    "fast-levenshtein": "^3.0.0",
+    "lodash": "^4.17.21"
+  }
+}

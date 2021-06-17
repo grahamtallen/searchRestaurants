@@ -35,7 +35,7 @@ Prerequisites
 
 Installing libraries
 
-- `npm -i`
+- `npm i`
 
 Running the program
 - Initialize the json bucket files used for optimized querying:
