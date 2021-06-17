@@ -1,5 +1,5 @@
 const csvtojson = require('csvtojson/v2')
-const { bucketArrayByColumn } = require("./bucketByField") // some files are initialized inside of the module
+const { bucketArrayByColumn } = require('./bucketByField') // some files are initialized inside of the module
 const fs = require('fs')
 const keyBy = require('lodash/keyBy')
 const path = require('path')
@@ -15,11 +15,10 @@ const main = async () => {
         restaurant.cuisine = cuisinesKeyedById[restaurant.cuisine_id].name
         return restaurant
     })
-    const sortedByDistance = restaurantsAll.sort((a, b) => a.distance - b.distance);
-    saveToDataStore(
-        sortedByDistance,
-        'restaurants-sorted-by-distance.json'
+    const sortedByDistance = restaurantsAll.sort(
+        (a, b) => a.distance - b.distance
     )
+    saveToDataStore(sortedByDistance, 'restaurants-sorted-by-distance.json')
     // data store for restaraunts by name
     let byName = {}
     restaurantsAll.forEach(restaurant => {
@@ -29,7 +28,6 @@ const main = async () => {
         byName[nameLowerCaseNoSpaces] = restaurant
     })
     saveToDataStore(byName, 'byName-keyed-object.json')
-
 
     const buckets = bucketArrayByColumn(sortedByDistance.reverse(), 'distance') // reverse very important here for the type of ordering we're trying to do in the next function
     saveToDataStore(buckets, 'bucketed-by-distance.json')
@@ -42,7 +40,10 @@ const main = async () => {
     saveToDataStore(bucketsByRating, 'bucketed-by-rating.json')
     // console.log('Shouldonly see 3 and up here', bucketsByRating[3].data.map(item => item.customer_rating))
 
-    const bucketsByPrice = bucketArrayByColumn(sortedByDistance.reverse(), 'price') // reverse very important here for the type of ordering we're trying to do in the next function
+    const bucketsByPrice = bucketArrayByColumn(
+        sortedByDistance.reverse(),
+        'price'
+    ) // reverse very important here for the type of ordering we're trying to do in the next function
     saveToDataStore(bucketsByPrice, 'bucketed-by-price.json')
 }
 

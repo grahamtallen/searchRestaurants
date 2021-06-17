@@ -10,27 +10,17 @@ const main = () => {
         customer_rating: 5,
         distance: 5,
         cuisine: 'Other',
-    };
-    console.log("Result of query 1: ", query1)
-    console.log(
-        performQueryAndGetResultSet(
-            query1,
-            LIMIT
-        )
-    )
+    }
+    console.log('Result of query 1: ', query1)
+    console.log(performQueryAndGetResultSet(query1, LIMIT))
     const query2 = {
         // name: 'Grill',
         customer_rating: 5,
         distance: 3,
         // cuisine: 'Other',
     }
-    console.log("Result of query 1: ", query2)
-    console.log(
-        performQueryAndGetResultSet(
-            query2,
-            LIMIT
-        )
-    ) // for viewing fields in the log
+    console.log('Result of query 1: ', query2)
+    console.log(performQueryAndGetResultSet(query2, LIMIT)) // for viewing fields in the log
     //.map(restaurant => restaurant.distance))
 }
 

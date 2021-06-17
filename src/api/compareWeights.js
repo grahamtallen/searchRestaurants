@@ -23,7 +23,7 @@ const getMatchWeight = (
     if (distance && !distWeight) {
         return 0
     }
-    return (nameWeight * 2) + (distWeight * 3) + (ratingWeight * 2) // todo price weight
+    return nameWeight * 2 + distWeight * 3 + ratingWeight * 2 // todo price weight
 }
 
 module.exports = {

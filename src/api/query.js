@@ -37,14 +37,14 @@ const performQueryAndGetResultSet = (parameters, limit) => {
                     (item ? match.matchWeight >= item.matchWeight : false)
                 if (isHigherOrEqual) {
                     highestWeightsCopy.unshift(match)
-                
+
                     break // no need to continue the loop, highest item found
                 } else {
                     continue
                 }
             }
             if (highestWeightsCopy.length > limit) {
-                highestWeightsCopy.pop();
+                highestWeightsCopy.pop()
             }
             highestWeights = highestWeightsCopy
         }

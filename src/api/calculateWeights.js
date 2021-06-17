@@ -23,7 +23,6 @@ const calculateRestaurantWeight = (restaurant, params) => {
     const nameWeight = calculateStringWeight(nameRestaurant, nameParam)
     const cuisineWeight = calculateStringWeight(cuisineRestaurant, cuisineParam)
 
-
     // rating
     let ratingWeight = 0
     // less than the param is 0
@@ -38,7 +37,7 @@ const calculateRestaurantWeight = (restaurant, params) => {
     let distWeight
     if (distanceRestaurant === 0) {
         // there is no negative distance, so no need to consider the param in this case
-        distWeight = 1;
+        distWeight = 1
     } else if (distanceParam && distanceRestaurant > distanceParam) {
         // exclude anything that is farther  than the specified farthest restaurant
         distWeight = 0
@@ -57,7 +56,6 @@ const calculateRestaurantWeight = (restaurant, params) => {
     } else {
         priceWeight = (100 - priceRestaurant) * 0.01
     }
-
 
     const allWeights = {
         nameWeight,

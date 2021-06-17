@@ -1,4 +1,3 @@
-
 const bucketArrayByColumn = (array, column, order = 'desc') => {
     // only works on a column with a reasonable amount of non-unique values
     // value must be a number or number/string
@@ -66,6 +65,5 @@ const resolveBuckets = (
 }
 
 module.exports = {
-    bucketArrayByColumn
+    bucketArrayByColumn,
 }
-
