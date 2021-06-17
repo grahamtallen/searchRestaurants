@@ -14,7 +14,7 @@ const main = () => {
                 cuisine: 'Other',
             },
             LIMIT
-        )
+        ).
     )
     console.log(
         performQueryAndGetResultSet(
@@ -25,7 +25,7 @@ const main = () => {
                 // cuisine: 'Other',
             },
             LIMIT
-        ).map(restaurant => restaurant.customer_rating)
+        )
     ) // for viewing fields in the log
     //.map(restaurant => restaurant.distance))
 }
