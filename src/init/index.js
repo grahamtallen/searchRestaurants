@@ -2,6 +2,7 @@ const csvtojson = require('csvtojson/v2')
 const { bucketArrayByColumn } = require("./bucketByField") // some files are initialized inside of the module
 const fs = require('fs')
 const keyBy = require('lodash/keyBy')
+const path = require('path')
 const RESTAURANTS_ALL_PATH = 'csv/restaurants.csv'
 const CUISINES_ALL_PATH = 'csv/cuisines.csv'
 

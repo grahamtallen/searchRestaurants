@@ -14,6 +14,11 @@ Testing
 - Queries should return expected results.
 - Tests can be found throughout theses .js and .test.js files, where the assert() module is used to assert an expected result
 
+Quantifying performance
+
+- Did not have time to run comprehensive tests
+- Execution time was measured using the time linux program: "time node src/index.js"
+
 Assumptions
 
 -   The string parameters will always be spelled correctly.
