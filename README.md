@@ -6,8 +6,8 @@ A small node program that performs queries on a restaurants database.
 
 The focus of this project was to optimize the performance of querying against this dataset. One important optimization - Before the queries are run, there are buckets that are generated so that queries do not have to perform the bucketing at the runtime. See `src/init/index.js`
 The best function to start analyzing this my code is `performQueryAndGetResultSet`.
-It will get the data set of items filtered by the current search parameters
-And then, build a result set of the 5 required best-matches based on parameters
+It will get the data set of items filtered by the current search parameters.
+Then, build a result set of the 5 required best-matches based on parameters
 It will only iterate through the dataset one time, for effeciency. 
 Nodejs was chosen simply because I am fluent in it.
 
