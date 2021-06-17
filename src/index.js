@@ -5,25 +5,29 @@ const { performQueryAndGetResultSet } = require('./api/query')
 
 const main = () => {
     const LIMIT = 5
+    const query1 = {
+        name: 'Grill',
+        customer_rating: 5,
+        distance: 5,
+        cuisine: 'Other',
+    };
+    console.log("Result of query 1: ", query1)
     console.log(
         performQueryAndGetResultSet(
-            {
-                name: 'Grill',
-                customer_rating: 5,
-                distance: 5,
-                cuisine: 'Other',
-            },
+            query1,
             LIMIT
         )
     )
+    const query2 = {
+        // name: 'Grill',
+        customer_rating: 5,
+        distance: 3,
+        // cuisine: 'Other',
+    }
+    console.log("Result of query 1: ", query2)
     console.log(
         performQueryAndGetResultSet(
-            {
-                // name: 'Grill',
-                customer_rating: 5,
-                distance: 3,
-                // cuisine: 'Other',
-            },
+            query2,
             LIMIT
         )
     ) // for viewing fields in the log

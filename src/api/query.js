@@ -35,31 +35,16 @@ const performQueryAndGetResultSet = (parameters, limit) => {
                 const isHigherOrEqual =
                     i === 0 ||
                     (item ? match.matchWeight >= item.matchWeight : false)
-                console.log(
-                    i,
-                    isHigherOrEqual,
-                    match.matchWeight,
-                    item && item.matchWeight
-                )
                 if (isHigherOrEqual) {
-                    // push the previous item back, replacing it with the current item
-                    const targetToPushBack = i + 1
-                    console.log({ targetToPushBack })
                     highestWeightsCopy.unshift(match)
-                    console.log(
-                        ' weights; ',
-                        highestWeightsCopy.length,
-                        'from ',
-                        highestWeights.length
-                    )
-
-                    break //
+                
+                    break // no need to continue the loop, highest item found
                 } else {
                     continue
                 }
             }
             if (highestWeightsCopy.length > limit) {
-                delete highestWeightsCopy[highestWeightsCopy.length - 1]
+                highestWeightsCopy.pop();
             }
             highestWeights = highestWeightsCopy
         }
