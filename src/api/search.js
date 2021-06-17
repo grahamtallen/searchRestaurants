@@ -1,5 +1,5 @@
 const { info, error } = console
-const {  compareWeights } = require('./compareWeights.js')
+const { compareWeights } = require('./compareWeights.js')
 const { calculateRestaurantWeight } = require('./calculateWeights')
 const main = (params, dataset = 0, matchFound) => {
     // const {
@@ -10,7 +10,6 @@ const main = (params, dataset = 0, matchFound) => {
     if (dataset.length === 0) {
         throw new Error('Dataset provided to search function is empty')
     }
- 
 
     for (let i = 0; i < dataset.length; i++) {
         const restauraunt = dataset[i]
@@ -29,11 +28,8 @@ const main = (params, dataset = 0, matchFound) => {
         const { matchWeight } = currentRestaurantWeights
         // info('Restaurant Weights: ', currentRestaurantWeights)
         if (matchWeight) {
-            matchFound(
-                mergeObjects(restauraunt, currentRestaurantWeights)
-            )
+            matchFound(mergeObjects(restauraunt, currentRestaurantWeights))
         }
-        
     }
 }
 
@@ -45,5 +41,5 @@ const mergeObjects = (restauraunt, weights) => {
 }
 
 module.exports = {
-    main
+    main,
 }

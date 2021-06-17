@@ -10,19 +10,19 @@ const calculateRestaurantWeight = (restaurant, params) => {
         cuisine: cuisineRestaurant,
         customer_rating: customer_ratingRestaurant,
         distance: distanceRestaurant,
-               price: priceRestaurant,
+        price: priceRestaurant,
     } = restaurant
     const {
         name: nameParam,
         cuisine: cuisineParam,
         customer_rating: customer_ratingParam,
         distance: distanceParam,
-               price: priceParam,
+        price: priceParam,
     } = params
 
-    const nameWeight = calculateStringWeight(nameRestaurant, nameParam);
-    const cuisineWeight = calculateStringWeight(cuisineRestaurant, cuisineParam);
-    
+    const nameWeight = calculateStringWeight(nameRestaurant, nameParam)
+    const cuisineWeight = calculateStringWeight(cuisineRestaurant, cuisineParam)
+
     // todo cuisine
 
     // rating
@@ -59,7 +59,6 @@ const calculateRestaurantWeight = (restaurant, params) => {
     } else {
         priceWeight = (100 - priceRestaurant) * 0.01
     }
-
 
     // TODO look into logarithm for distance
 

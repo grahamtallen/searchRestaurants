@@ -8,13 +8,15 @@ rl.setPrompt(
 )
 rl.prompt()
 
-rl.on('line', function (line) {
-    const input = line.trim()
-    if (input) {
-        console.log(tryAQuery(input))
-    }
-    rl.prompt()
-}).on('close', function () {
-    console.log('Closing program...')
-    process.exit(0)
-})
+rl
+    .on('line', function(line) {
+        const input = line.trim()
+        if (input) {
+            console.log(tryAQuery(input))
+        }
+        rl.prompt()
+    })
+    .on('close', function() {
+        console.log('Closing program...')
+        process.exit(0)
+    })

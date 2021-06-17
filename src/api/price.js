@@ -5,14 +5,13 @@ const bucketedByPriceRaw = fs.readFileSync(
 )
 const bucketedByPrice = JSON.parse(bucketedByPriceRaw)
 
-const main = (price) => {
-    return bucketedByPrice[price].data;
-};
+const main = price => {
+    return bucketedByPrice[price].data
+}
 
-const hasDataAtThatPrice = (price) => !!bucketedByPrice[price]
-
+const hasDataAtThatPrice = price => !!bucketedByPrice[price]
 
 module.exports = {
     main,
-    hasDataAtThatPrice
+    hasDataAtThatPrice,
 }

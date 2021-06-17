@@ -5,13 +5,13 @@ const bucketedByDistanceRaw = fs.readFileSync(
 )
 const bucketedByDistance = JSON.parse(bucketedByDistanceRaw)
 
-const main = (distance) => {
-    return bucketedByDistance[distance].data;
-};
+const main = distance => {
+    return bucketedByDistance[distance].data
+}
 
-const hasDataAtThatDistance = (distance) => !!bucketedByDistance[distance]
+const hasDataAtThatDistance = distance => !!bucketedByDistance[distance]
 
 module.exports = {
     main,
-    hasDataAtThatDistance
+    hasDataAtThatDistance,
 }
