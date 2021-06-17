@@ -25,7 +25,7 @@ Assumptions
 
 Weaknesses of this approach and todos
 
-- The filters to limit the size of the data linearly searched could be improved. Right now they only work one at at time, so adding multiple parameters will slow down the problem, see src/api/filter.js
+- The filters to limit the size of the data linearly searched could be improved. Right now they only work one at at time, so adding more than one parameter will slow down execution see src/api/filter.js
 - The performance of the fast-levenshtein library is unknown
 
 Prerequisites
