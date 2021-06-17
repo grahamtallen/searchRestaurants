@@ -22,7 +22,6 @@ Testing
 
 Quantifying performance
 
-- I did not have time to run comprehensive tests
 - Execution time was measured using the time linux program: "time node src/index.js"
 
 Assumptions
@@ -31,8 +30,7 @@ Assumptions
 -   The restaraunts are evenly distributed amoung their attribute values. There is no need to optimize or make assumptions about the distributions of the data set, or optimize for any specific ranges.
 -   The number of rows on each table is unbounded.
 -   customer_rating has a max value of 5 and a minimum value of 1.
--   customer_rating is always an integer.
--   f(n) should be greater than or equal to O(n)
+-   customer_rating, price, distance is always an integer.
 -   Each parameter can contain only one value.
 -   Only return the 5 Best Matches.
 -   Code is clean, readable, testable, robust, performant, and maintainable.
