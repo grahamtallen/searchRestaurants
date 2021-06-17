@@ -1,5 +1,6 @@
 Prerequisites
 - Install node.js (preferrably with nvm)
+- If you did not use nvm to install node, you must also install npm - node package manger
 
 Running the program
 - Initialize the json bucket files used for optimized querying:
@@ -12,11 +13,11 @@ Running the program
 Testing
 
 - Queries should return expected results.
-- Tests can be found throughout theses .js and .test.js files, where the assert() module is used to assert an expected result
+- Tests can be found throughout theses .js and .test.js files, where the assert() module is used to assert an expected result. The assert module will throw an error to stderr if any test recieves an unexpected result.
 
 Quantifying performance
 
-- Did not have time to run comprehensive tests
+- I did not have time to run comprehensive tests
 - Execution time was measured using the time linux program: "time node src/index.js"
 
 Assumptions
@@ -34,10 +35,10 @@ Assumptions
 
 Weaknesses of this approach and todos
 
-- The filters to limit the size of the data linearly searched could be improved. Right now they only work one at at time, so adding multiple parameters will slow down the problem
+- The filters to limit the size of the data linearly searched could be improved. Right now they only work one at at time, so adding multiple parameters will slow down the problem, see src/api/filter.js
 - The performance of the fast-levenshtein library is unknown
 
-
+Notes:
 
 Readablility
 
