@@ -1,3 +1,30 @@
+#searchRestaurants
+
+A small node program that performs queries on a restaurants 2. database
+The focus of this project was to optimize the performance of querying against this dataset. One important optimization - Before the queries are run, there are buckets that are generated so that queries do not have to perform the bucketing at the runtime. See `src/init/index.js`
+The best function to start analyzing this my code is `performQueryAndGetResultSet`.
+It will get the data set of items filtered by the current search parameters
+And then, build a result set of the 5 required best-matches based on parameters
+It will only iterate through the dataset one time, for effeciency. 
+Nodejs was chosen simply because I am fluent in it.
+
+Assumptions
+
+-   The string parameters will always be spelled correctly.
+-   The restaraunts are evenly distributed amoung their attribute values. There is no need to optimize or make assumptions about the distributions of the data set, or optimize for any specific ranges.
+-   The number of rows on each table is unbounded.
+-   customer_rating has a max value of 5 and a minimum value of 1.
+-   customer_rating, price, distance is always an integer.
+-   Each parameter can contain only one value.
+-   Only return the 5 Best Matches.
+-   Code is clean, readable, testable, robust, performant, and maintainable.
+-   Price can be bucketed to intervals of 5
+
+Weaknesses of this approach and todos
+
+- The filters to limit the size of the data linearly searched could be improved. Right now they only work one at at time, so adding multiple parameters will slow down the problem, see src/api/filter.js
+- The performance of the fast-levenshtein library is unknown
+
 Prerequisites
 
 - Install node.js (preferrably with nvm)
@@ -23,23 +50,6 @@ Testing
 Quantifying performance
 
 - Execution time was measured using the time linux program: "time node src/index.js"
-
-Assumptions
-
--   The string parameters will always be spelled correctly.
--   The restaraunts are evenly distributed amoung their attribute values. There is no need to optimize or make assumptions about the distributions of the data set, or optimize for any specific ranges.
--   The number of rows on each table is unbounded.
--   customer_rating has a max value of 5 and a minimum value of 1.
--   customer_rating, price, distance is always an integer.
--   Each parameter can contain only one value.
--   Only return the 5 Best Matches.
--   Code is clean, readable, testable, robust, performant, and maintainable.
--   Price can be bucketed to intervals of 5
-
-Weaknesses of this approach and todos
-
-- The filters to limit the size of the data linearly searched could be improved. Right now they only work one at at time, so adding multiple parameters will slow down the problem, see src/api/filter.js
-- The performance of the fast-levenshtein library is unknown
 
 Notes:
 
