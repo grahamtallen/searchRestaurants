@@ -1,13 +1,9 @@
-const { assert } = require('console')
-const fs = require('fs')
-const path = require('path')
-const { DATA_STORES_PATH } = require('.')
 
 const bucketArrayByColumn = (array, column, order = 'desc') => {
     // only works on a column with a reasonable amount of non-unique values
     // value must be a number or number/string
     // order is the inclusion criteria
-    console.warn('Inefficient, do not run this inside of any http handler')
+    console.warn('Inefficient, this process may take a while')
     const buckets = []
     let greatestDistance = 0
     let numberOfIndividualBuckets = 0
@@ -69,26 +65,7 @@ const resolveBuckets = (
     }
 }
 
-const saveToDataStore = (data, filename) => {
-    let json = JSON.stringify(data)
-    fs.writeFileSync(DATA_STORES_PATH + filename, json)
+module.exports = {
+    bucketArrayByColumn
 }
 
-const sortedByDistanceRaw = fs.readFileSync(
-    path.resolve('src/data-stores/restaurants-sorted-by-distance.json')
-)
-const sortedByDistance = JSON.parse(sortedByDistanceRaw)
-
-const buckets = bucketArrayByColumn(sortedByDistance.reverse(), 'distance') // reverse very important here for the type of ordering we're trying to do in the next function
-saveToDataStore(buckets, 'bucketed-by-distance.json')
-
-const bucketsByRating = bucketArrayByColumn(
-    sortedByDistance.reverse(),
-    'customer_rating',
-    'asc'
-) // reverse very important here for the type of ordering we're trying to do in the next function
-saveToDataStore(bucketsByRating, 'bucketed-by-rating.json')
-// console.log('Shouldonly see 3 and up here', bucketsByRating[3].data.map(item => item.customer_rating))
-
-const bucketsByPrice = bucketArrayByColumn(sortedByDistance.reverse(), 'price') // reverse very important here for the type of ordering we're trying to do in the next function
-saveToDataStore(bucketsByPrice, 'bucketed-by-price.json')

@@ -2,6 +2,9 @@ Prerequisites
 - Install node.js (preferrably with nvm)
 
 Running the program
+- Initialize the json bucket files used for optimized querying:
+- run the command "node src/init/index.js"
+- This will create a number of bucketed data results in src/data-stores
 - run the command "node src/index.js"
 - The results of the two queries in that file are logged to the console
 - You can try getting different result sets by modifying those parameters
