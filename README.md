@@ -1,4 +1,4 @@
-#searchRestaurants
+# searchRestaurants
 
 A small node program that performs queries on a restaurants 2. database
 The focus of this project was to optimize the performance of querying against this dataset. One important optimization - Before the queries are run, there are buckets that are generated so that queries do not have to perform the bucketing at the runtime. See `src/init/index.js`
